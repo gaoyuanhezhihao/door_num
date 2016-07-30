@@ -10,5 +10,5 @@
 using namespace std;
 using namespace cv;
 using namespace cv::text;
-int find_text(vector<string>& words, vector<float>  &confidences, Mat & image);
+int find_text(vector<string>& words, vector<float>  &confidences, Mat & image,vector<Rect>&  boxes);
 #endif// SCENE_TEXT_H

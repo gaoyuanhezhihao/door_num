@@ -10,7 +10,7 @@ bool   sort_by_lenght(const string &a, const string &b);
 void   er_draw(vector<Mat> &channels, vector<vector<ERStat> > &regions, vector<Vec2i> group, Mat& segmentation);
 
 //Perform text detection and recognition and evaluate results using edit distance
-int find_text(vector<string>& words, vector<float>  &confidences, Mat & image) {
+int find_text(vector<string>& words, vector<float>  &confidences, Mat & image,vector<Rect>&  boxes) {
     cout << "IMG_W=" << image.cols << endl;
     cout << "IMG_H=" << image.rows << endl;
 	int	argc = 2;
@@ -99,7 +99,7 @@ int find_text(vector<string>& words, vector<float>  &confidences, Mat & image) {
         group_img(nm_boxes[i]).copyTo(group_img);
         copyMakeBorder(group_img,group_img,15,15,15,15,BORDER_CONSTANT,Scalar(0));
 
-        vector<Rect>   boxes;
+        //vector<Rect>   boxes;
         //vector<string> words;
         //vector<float>  confidences;
         ocr->run(group_img, output, &boxes, &words, &confidences, OCR_LEVEL_WORD);

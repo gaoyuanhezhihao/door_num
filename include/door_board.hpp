@@ -37,6 +37,6 @@ public:
 
 
 state_next_door go_to_next_door(PathInfo & path, string door_num, int sclient, cv::VideoCapture & cap);
-Check_Result check(vector<string> & words, vector<float>& confidences, string & door_num);
+Check_Result check(vector<string> & words, vector<float>& confidences, vector<Rect> & boxes, string & door_num, Mat & img);
 Detect_Result detect_in_move(int sclient, char move_directiion, cv::VideoCapture &cap, string & door_num);
 #endif // DOOR_BOARD_HPP

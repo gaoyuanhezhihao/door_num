@@ -33,7 +33,7 @@ state_next_door go_to_next_door(PathInfo & path, string door_num, int sclient, c
 	}		
 }
 
-Check_Result check(vector<string> & words, vector<float>& confidences, string & door_num) {
+Check_Result check(vector<string> & words, vector<float>& confidences, vector<Rect> & boxes, string & door_num, Mat & img) {
 		int i =0;
 		int match_count = 0;
 		int possible_match_num = 0;
@@ -49,6 +49,7 @@ Check_Result check(vector<string> & words, vector<float>& confidences, string & 
 								}
 						}
 						if(match_count == door_num.length()) {
+								cv::rectangle(img, boxes[i].tl(), boxes[i].br(), Scalar(255, 0,0), 3);
 								cout << "found Perfect_Match" <<endl;
 								cout << words[i]<<endl;
 								cout<< "press enter to continue"<<endl;
@@ -73,6 +74,7 @@ Check_Result check(vector<string> & words, vector<float>& confidences, string & 
 Detect_Result detect_in_move(int sclient, char move_directiion, cv::VideoCapture &cap, string & door_num) {
 		vector<string> words;
 		vector<float> confidences;
+		vector<cv::Rect> boxes;
 		cv::Mat frame;
 		while(true) {
 				cap >> frame;
@@ -82,10 +84,13 @@ Detect_Result detect_in_move(int sclient, char move_directiion, cv::VideoCapture
 				}
 				words.clear();
 				confidences.clear();
-				find_text(words, confidences, frame);
+				boxes.clear();
+				find_text(words, confidences, frame, boxes);
 				cv::imshow("video", frame);
 				if(words.size() != 0 ) {
-						if(Check_Result::Perfect_Match == check(words, confidences, door_num)) {
+						if(Check_Result::Perfect_Match == check(words, confidences, boxes, door_num, frame) ){
+								cv::imshow("detect_in_move", frame);
+								cv::waitKey(1);
 								send_stop_order(sclient);
 								return Detect_Result::Detected_It;
 						}
