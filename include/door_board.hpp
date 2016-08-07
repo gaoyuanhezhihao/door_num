@@ -27,6 +27,11 @@ enum class Check_Result{
 		Negative
 };
 
+enum class Adjust_Result{
+    Fake_DoorBoard,
+    Succeed,
+};
+
 class PathInfo {
 public:
 		// describing one path to next position.
@@ -37,6 +42,7 @@ public:
 
 
 state_next_door go_to_next_door(PathInfo & path, string door_num, int sclient, cv::VideoCapture & cap);
-Check_Result check(vector<string> & words, vector<float>& confidences, vector<Rect> & boxes, string & door_num, Mat & img);
+Check_Result check(vector<string> & words, vector<float>& confidences, vector<Rect> & boxes, string & door_num, Mat & img, Rect & match_rect);
 Detect_Result detect_in_move(int sclient, char move_directiion, cv::VideoCapture &cap, string & door_num);
+Adjust_Result adjust_car(cv::VideoCapture & cap, int sclient, std::string & door_board);
 #endif // DOOR_BOARD_HPP

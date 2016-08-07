@@ -27,5 +27,6 @@ bool send_forward_order(int sock);
 bool send_stop_order(int sock);
 bool make_a_turn(char side, int degree, int sclient);
 bool send_dist_go_order(char direction, int sclient, int dist); 
+bool change_speed(double perc_speed, int sclient);
 
 #endif //COMMUNICATION_HPP
